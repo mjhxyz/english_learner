@@ -1,10 +1,66 @@
 {% extends "base.j2" %}
-{% block title %}忽略了{% endblock %}
+{% block title %}首页{% endblock %}
+{% block style %}
+    <style>
+        .layui-col-xs12 {
+            margin-bottom: 20px;
+        }
+
+        .main-title {
+            line-height: 32px;
+            padding: 16px 0;
+            font-size: 32px;
+        }
+
+        .main-panel {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .main-panel .main-title {
+            text-align: center;
+        }
+
+        .main-panel p {
+            text-align: center;
+        }
+
+        .search-panel {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+{% endblock %}
 {% block content %}
-    <h1>Index</h1>
-    <p class="important">
-        Welcome on my awesome homepage.
-    </p>
+    <div class="layui-col-xs12">
+        <div class="layui-panel main-panel">
+            <div class="main-title">
+                英语辅助学习系统
+            </div>
+            <p>
+                基于 Flask、LayUI 的英语辅助学习系统，支持记背单词、复习单词本以及管理单词、单词本的功能
+            </p>
+        </div>
+    </div>
+    <div class="layui-col-xs12">
+        <div class="layui-panel search-panel">
+            <div>随便搜点什么吧~</div>
+            <div class="layui-form-item">
+                <div class="layui-input-group">
+                    <input type="text" placeholder="请输入感兴趣的内容" class="layui-input">
+                    <div class="layui-input-suffix">
+                        <button class="layui-btn">搜索</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block script %}
     <script>
@@ -14,6 +70,5 @@
             // Welcome
             layer.msg('Hello World', {icon: 6});
         });
-
     </script>
 {% endblock %}

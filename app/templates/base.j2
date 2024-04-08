@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .layui-header {
+            background-color: #2f363c;
+        }
+    </style>
+    {% block style %}
+    {% endblock %}
     {% block head %}
         <title>
             {% block title %}{% endblock %} - 英语辅助学习
@@ -13,12 +24,23 @@
 </head>
 
 <body>
-<div id="content">{% block content %}{% endblock %}</div>
-<div id="footer">
-    {% block footer %}
-        &copy; Copyright 2024 by <a href="http://domain.invalid/">you</a>.
-    {% endblock %}
+<div class="layui-header header-themes" style="margin-bottom: 20px">
+    <ul class="layui-nav layui-container">
+        <li class="layui-nav-item"><a href="">英语辅助学习系统</a></li>
+        <li class="layui-nav-item"><a href="">练习册</a></li>
+        <li class="layui-nav-item"><a href="">单词</a></li>
+        <li class="layui-nav-item"><a href="">我的收藏</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">更多</a>
+            <dl class="layui-nav-child">
+                <dd><a href="">选项1</a></dd>
+                <dd><a href="">选项2</a></dd>
+                <dd><a href="">选项3</a></dd>
+            </dl>
+        </li>
+    </ul>
 </div>
+<div class="layui-container">{% block content %}{% endblock %}</div>
 <script src="/static/js/layui.min.js"></script>
 {% block script %}
 {% endblock %}
