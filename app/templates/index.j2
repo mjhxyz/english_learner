@@ -1,0 +1,19 @@
+{% extends "base.j2" %}
+{% block title %}忽略了{% endblock %}
+{% block content %}
+    <h1>Index</h1>
+    <p class="important">
+        Welcome on my awesome homepage.
+    </p>
+{% endblock %}
+{% block script %}
+    <script>
+        // Usage
+        layui.use(function () {
+            var layer = layui.layer;
+            // Welcome
+            layer.msg('Hello World', {icon: 6});
+        });
+
+    </script>
+{% endblock %}
