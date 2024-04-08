@@ -26,9 +26,9 @@
 <body>
 <div class="layui-header header-themes" style="margin-bottom: 20px">
     <ul class="layui-nav layui-container">
-        <li class="layui-nav-item"><a href="">英语辅助学习系统</a></li>
+        <li class="layui-nav-item"><a href="/">英语辅助学习系统</a></li>
         <li class="layui-nav-item"><a href="">练习册</a></li>
-        <li class="layui-nav-item"><a href="">单词</a></li>
+        <li class="layui-nav-item"><a href="/words">单词</a></li>
         <li class="layui-nav-item"><a href="">我的收藏</a></li>
         <li class="layui-nav-item">
             <a href="javascript:;">更多</a>
@@ -42,6 +42,8 @@
 </div>
 <div class="layui-container">{% block content %}{% endblock %}</div>
 <script src="/static/js/layui.min.js"></script>
+<script src="/static/js/vue.min.js"></script>
+
 {% block script %}
 {% endblock %}
 

@@ -1,11 +1,15 @@
 from flask import Flask
 
 from .view.index import index_bp
+from .view.words import words_bp
+from .api.words import words_api
 
 
 def config_blueprint(app):
     BLUEPRINTS = [
-        (index_bp, '/')
+        (index_bp, '/'),
+        (words_bp, '/words'),
+        (words_api, '/api/words'),
     ]
     for bp, prefix in BLUEPRINTS:
         app.register_blueprint(bp, url_prefix=prefix)
