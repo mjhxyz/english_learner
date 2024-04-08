@@ -4,15 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad8243f2-444a-4890-837e-46572d193fba" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/app/api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/words.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/js/vue.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/words.j2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/view/words.py" afterDir="false" />
+    <list default="true" id="ad8243f2-444a-4890-837e-46572d193fba" name="更改" comment="更改">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/config/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ext.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/word.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/load_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/base.j2" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base.j2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/words.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/words.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,9 +57,11 @@
     "Flask 服务器.Flask (app.py).executor": "Run",
     "Flask 服务器.english_learner.executor": "Run",
     "Python.app.executor": "Run",
+    "Python.load_data.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/mao/Desktop/djangonifx5",
+    "last_opened_file_path": "D:/git/english_learner/sql",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -68,6 +72,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\git\english_learner\sql" />
       <recent name="D:\git\english_learner\app\static\js" />
       <recent name="D:\git\english_learner\app\templates" />
       <recent name="D:\git\english_learner\app\static\css" />
@@ -95,6 +100,29 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="load_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="english_learner" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sql" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sql/load_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -138,6 +166,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Flask 服务器.Flask (app.py)" />
+        <item itemvalue="Python.load_data" />
         <item itemvalue="Python.app" />
       </list>
     </recent_temporary>
@@ -159,7 +188,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712542613674</updated>
       <workItem from="1712542614195" duration="120000" />
-      <workItem from="1712542740088" duration="17489000" />
+      <workItem from="1712542740088" duration="24333000" />
     </task>
     <servers />
   </component>
@@ -167,7 +196,8 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/english_learner$Flask__app_py_.coverage" NAME="Flask (app.py) 覆盖结果" MODIFIED="1712569266081" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/english_learner$Flask__app_py_.coverage" NAME="Flask (app.py) 覆盖结果" MODIFIED="1712581289219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/english_learner$load_data.coverage" NAME="load_data 覆盖结果" MODIFIED="1712583579737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sql" />
     <SUITE FILE_PATH="coverage/english_learner$app.coverage" NAME="app 覆盖结果" MODIFIED="1712543759158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/english_learner$english_learner.coverage" NAME="english_learner 覆盖结果" MODIFIED="1712543886688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

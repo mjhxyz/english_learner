@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request
 
-from app.view import words
+from app.models.word import Word
 
 words_api = Blueprint('words_api', __name__)
 
@@ -12,20 +12,18 @@ def index():
     page = int(args['page'])
     limit = int(args['limit'])
     keyword = args.get('keyword')
-    # TODO DELETE
-    # 随机数据
-    res = []
-    for i in range(limit):
-        res.append({
-            'id': f'W${str((page - 1) * limit + i + 1)}',
-            'word': 'helloworld',
-            'cn': '你好的' + str(keyword)
-        })
-
+    # 分页查询 Word
+    q = Word.query
+    if keyword:
+        q = q.filter(Word.word.like('%' + keyword + '%'))
+    page_result = q.paginate(page=page, per_page=limit)
+    print(page_result.__dict__)
+    # items 转换为 dict
+    items = list(map(lambda x: x.to_dict(), page_result.items))
     data = {
         "code": 0,
         "msg": "",
-        "count": 1000,
-        "data": res
+        "count": page_result.total,
+        "data": items
     }
     return jsonify(data)
