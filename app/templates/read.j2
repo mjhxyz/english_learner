@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #read {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 20px 0;
+        }
+
+        .word {
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+        }
+
+        .desc {
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .op {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        [v-clock] {
+            display: none;
+        }
+    </style>
+    <title>练习册</title>
+    <link href="/static/css/layui.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div id="read" v-cloak>
+    {% raw %}
+        <div class="word">
+            <span v-if="curIndex < words.length">{{ words[curIndex].word }}</span>
+            <span v-else>练习完成, 认识率 ({{ known }} / {{ words.length }})</span>
+        </div>
+        <div class="desc">
+            <span v-if="show">{{ words[curIndex].cn }}</span>
+        </div>
+        <div class="op">
+            <div class="layui-btn-container">
+                <button type="button" class="layui-btn" @click="doNext(true)">认识</button>
+                <button type="button" class="layui-btn layui-btn-warm" @click="doShow">解释</button>
+                <button type="button" class="layui-btn layui-btn-danger" @click="doNext(false)">不认识</button>
+            </div>
+        </div>
+    {% endraw %}
+</div>
+
+<script src="/static/js/layui.min.js"></script>
+<script src="/static/js/vue.min.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#read',
+        data: {
+            words: {{ words }},
+            show: false,
+            curIndex: 0,
+            known: 0, // 知道的单词数量
+        },
+        methods: {
+            doShow() {
+                this.show = true
+            },
+            doNext(known) {
+                if (this.curIndex === this.words.length) {
+                    return;
+                }
+                this.show = false
+                if (known) {
+                    this.known += 1
+                }
+                this.curIndex += 1
+                if (this.curIndex === this.words.length) {
+                    layer.msg('练习完成!');
+                }
+            }
+        }
+    })
+    // Usage
+    layui.use(function () {
+        var layer = layui.layer;
+        // Welcome
+        {% with messages = get_flashed_messages(with_categories=False, category_filter=['error']) %}
+            {% if messages %}
+                layer.msg('{{ messages[0] }}');
+            {% endif %}
+        {% endwith %}
+
+    });
+</script>
+
+</body>
+
+</html>

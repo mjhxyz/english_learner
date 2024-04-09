@@ -1,11 +1,14 @@
 from flask import Blueprint, jsonify, request
+from flask_login import current_user, login_required
 
 from app.models.book import Book
+from app.models.collection import Collection
 
 books_api = Blueprint('books_api', __name__)
 
 
 @books_api.route('/', methods=['GET'])
+@login_required
 def index():
     args = request.args
     page = int(args['page'])

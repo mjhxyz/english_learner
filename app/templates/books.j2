@@ -60,7 +60,7 @@
     <script type="text/html" id="barDemo">
         <div class="layui-clear-space">
             <a class="layui-btn layui-btn-xs" lay-event="detail">详情</a>
-            <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="start">开始练习</a>
+            <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="read">开始练习</a>
         </div>
     </script>
 {% endblock %}
@@ -151,12 +151,16 @@
                         </div>
                         `
                     });
-                } else if (obj.event === 'start') {
+                } else if (obj.event === 'read') {
                     // 开始练习
+                    layer.open({
+                        title: '阅读 - ' + data.name,
+                        type: 2,
+                        area: ['500px', '300px'],
+                        content: '/books/read?book_id=' + data.id
+                    });
                 }
             });
-
         })
-
     </script>
 {% endblock %}
