@@ -43,9 +43,11 @@
             <div class="main-title">
                 英语辅助学习系统
             </div>
-            <p>
-                基于 Flask、LayUI 的英语辅助学习系统，支持记背单词、复习单词本以及管理单词、单词本的功能
-            </p>
+            {% block sub_title %}
+                <p>
+                    基于 Flask、LayUI 的英语辅助学习系统，支持记背单词、复习单词本以及管理单词、单词本的功能
+                </p>
+            {% endblock %}
         </div>
     </div>
     <div class="layui-col-xs12">
@@ -64,11 +66,5 @@
 {% endblock %}
 {% block script %}
     <script>
-        // Usage
-        layui.use(function () {
-            var layer = layui.layer;
-            // Welcome
-            layer.msg('Hello World', {icon: 6});
-        });
     </script>
 {% endblock %}

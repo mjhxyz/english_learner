@@ -27,22 +27,54 @@
 <div class="layui-header header-themes" style="margin-bottom: 20px">
     <ul class="layui-nav layui-container">
         <li class="layui-nav-item"><a href="/">英语辅助学习系统</a></li>
-        <li class="layui-nav-item"><a href="">练习册</a></li>
+        <li class="layui-nav-item"><a href="/books">练习册</a></li>
         <li class="layui-nav-item"><a href="/words">单词</a></li>
         <li class="layui-nav-item"><a href="">我的收藏</a></li>
-        <li class="layui-nav-item">
-            <a href="javascript:;">更多</a>
-            <dl class="layui-nav-child">
-                <dd><a href="">选项1</a></dd>
-                <dd><a href="">选项2</a></dd>
-                <dd><a href="">选项3</a></dd>
-            </dl>
-        </li>
+        {% if current_user.is_authenticated and current_user.rid == 1 %}
+            <li class="layui-nav-item">
+                <a href="javascript:;">管理员菜单</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">单词管理</a></dd>
+                    <dd><a href="">练习册管理</a></dd>
+                    <dd><a href="">用户管理</a></dd>
+                </dl>
+            </li>
+        {% endif %}
+        <ul class="layui-nav layui-layout-right">
+            {% if current_user.is_authenticated %}
+                <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
+                    <a href="javascript:;">
+                        <img src="https://ui-avatars.com/api/?name={{ current_user.name }}" class="layui-nav-img">
+                        {{ current_user.name }}
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/users/exit">退出</a></dd>
+                    </dl>
+                </li>
+            {% else %}
+                <li class="layui-nav-item"><a href="/users/login">登录</a></li>
+                <li class="layui-nav-item">|</li>
+                <li class="layui-nav-item"><a href="/users/register">注册</a></li>
+            {% endif %}
+        </ul>
     </ul>
 </div>
 <div class="layui-container">{% block content %}{% endblock %}</div>
 <script src="/static/js/layui.min.js"></script>
 <script src="/static/js/vue.min.js"></script>
+<script>
+    // Usage
+    layui.use(function () {
+        var layer = layui.layer;
+        // Welcome
+        {% with messages = get_flashed_messages(with_categories=False, category_filter=['error']) %}
+            {% if messages %}
+                layer.msg('{{ messages[0] }}');
+            {% endif %}
+        {% endwith %}
+
+    });
+</script>
 
 {% block script %}
 {% endblock %}

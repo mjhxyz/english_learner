@@ -1,0 +1,162 @@
+{% extends "base.j2" %}
+{% block title %}练习册{% endblock %}
+{% block style %}
+    <style>
+        .detail-table {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .detail-table .detail-row {
+            display: flex;
+        }
+
+        .detail-table .detail-row .detail-label {
+            width: 120px;
+        }
+
+        .search-panel {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="app">
+        <div class="layui-col-xs12">
+            <div class="layui-panel search-panel">
+                <div class="layui-form">
+                    <div class="layui-form-item" style="margin: 0">
+                        <div class="layui-input-group">
+                            <div class="layui-input-prefix">
+                                练习册
+                            </div>
+                            <input v-model="searchKey" type="text" placeholder="请输入查询内容" class="layui-input">
+                            </input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12">
+            <div class="layui-panel main-panel">
+                <table id="table" lay-filter="table" class="layui-table" lay-data="{url:'', page:true}">
+                    <thead>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="search"><i
+                    class="layui-icon layui-icon-search"></i> 快速查询
+            </button>
+        </div>
+    </script>
+    <script type="text/html" id="barDemo">
+        <div class="layui-clear-space">
+            <a class="layui-btn layui-btn-xs" lay-event="detail">详情</a>
+            <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="start">开始练习</a>
+        </div>
+    </script>
+{% endblock %}
+{% block script %}
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                searchKey: ''
+            },
+            created() {
+                console.log('create!!!')
+            }
+        })
+        console.log(vm)
+
+        layui.use(['table'], function () {
+            let table = layui.table;
+            // 创建渲染实例
+            table.render({
+                elem: '#table',
+                url: '/api/books/',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                {#height: 'full-80', // 最大高度减去其他容器已占有的高度差#}
+                css: [ // 重设当前表格样式
+                    '.layui-table-tool-temp{padding-right: 145px;}'
+                ].join(''),
+                cellMinWidth: 80,
+                totalRow: true, // 开启合计行
+                page: true,
+                cols: [[
+                    {#{type: 'checkbox', fixed: 'left'},#}
+                    {field: 'id', width: 120, sort: true, title: '练习册编号'},
+                    {field: 'name', sort: true, title: '练习册名'},
+                    {field: 'hot', sort: true, width: 100, title: '热度'},
+                    {field: 'add_time', sort: true, title: '添加日期'},
+                    {fixed: 'right', title: '操作', width: 180, minWidth: 180, toolbar: '#barDemo'}
+                ]],
+                before(options) {
+                    options.where.keyword = vm.searchKey
+                }
+            })
+
+            // 工具栏事件
+            table.on('toolbar(table)', function (obj) {
+                var id = obj.config.id;
+                var checkStatus = table.checkStatus(id);
+                var othis = lay(this);
+                switch (obj.event) {
+                    case 'search':
+                        table.reload('table')
+                        break;
+                }
+            });
+
+            // 触发单元格工具事件
+            table.on('tool(table)', function (obj) { // 双击 toolDouble
+                var data = obj.data; // 获得当前行数据
+                // console.log(obj)
+                if (obj.event === 'detail') {
+                    layer.open({
+                        title: '练习册详情 - ' + data.id,
+                        type: 1,
+                        area: ['500px', '300px'],
+                        content: `
+                        <div style="padding: 16px;" class="detail-table">
+                            <div class="detail-row">
+                                <div class="detail-label">练习册编号</div>
+                                <div class="detail-value">${data.id}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">练习册名</div>
+                                <div class="detail-value">${data.name}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">热度</div>
+                                <div class="detail-value">${data.hot}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">添加时间</div>
+                                <div class="detail-value">${data.add_time || ''}</div>
+                            </div>
+                        </div>
+                        `
+                    });
+                } else if (obj.event === 'start') {
+                    // 开始练习
+                }
+            });
+
+        })
+
+    </script>
+{% endblock %}

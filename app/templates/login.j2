@@ -1,0 +1,74 @@
+{% extends "base.j2" %}
+{% block title %}登录{% endblock %}
+{% block style %}
+    <style>
+        .login-panel {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            justify-content: center;
+        }
+
+        .login-panel.title {
+            line-height: 32px;
+            padding: 16px 0;
+            font-size: 32px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="app">
+        <div class="layui-col-xs12">
+            <div class="layui-panel login-panel title">
+                注册
+            </div>
+        </div>
+        <div class="layui-col-xs12">
+            <div class="layui-panel login-panel">
+                <form class="layui-form" method="post">
+                    <div class="demo-login-container">
+                        <div class="layui-form-item">
+                            <div class="layui-input-wrap">
+                                <div class="layui-input-prefix">
+                                    <i class="layui-icon layui-icon-username"></i>
+                                </div>
+                                <input type="text" name="login_id" value="" lay-verify="required" placeholder="登录账号"
+                                       lay-reqtext="请填登录账号" autocomplete="off" class="layui-input"
+                                       lay-affix="clear">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-wrap">
+                                <div class="layui-input-prefix">
+                                    <i class="layui-icon layui-icon-password"></i>
+                                </div>
+                                <input type="password" name="pwd" value="" lay-verify="required"
+                                       placeholder="密   码" lay-reqtext="请填写密码" autocomplete="off"
+                                       class="layui-input" lay-affix="eye">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-login">登录</button>
+                        </div>
+                        <div class="layui-form-item demo-login-other">
+                            <a href="/users/register">注册帐号</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            created() {
+            }
+        })
+
+    </script>
+{% endblock %}

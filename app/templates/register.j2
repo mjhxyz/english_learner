@@ -1,0 +1,94 @@
+{% extends "base.j2" %}
+{% block title %}注册{% endblock %}
+{% block style %}
+    <style>
+        .register-panel {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            justify-content: center;
+        }
+
+        .register-panel.title {
+            line-height: 32px;
+            padding: 16px 0;
+            font-size: 32px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="app">
+        <div class="layui-col-xs12">
+            <div class="layui-panel register-panel title">
+                注册
+            </div>
+        </div>
+        <div class="layui-col-xs12">
+            <div class="layui-panel register-panel">
+                <form class="layui-form" action="/users/register" method="post">
+                    <div class="demo-reg-container">
+                        <div class="layui-form-item">
+                            <div class="layui-row">
+                                <div class="layui-input-wrap">
+                                    <div class="layui-input-prefix">
+                                        <i class="layui-icon layui-icon-cellphone"></i>
+                                    </div>
+                                    <input type="text" name="login_id" value="" lay-verify="required"
+                                           placeholder="账号" lay-reqtext="请填写账号" autocomplete="off"
+                                           class="layui-input" id="login_id">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-wrap">
+                                <div class="layui-input-prefix">
+                                    <i class="layui-icon layui-icon-password"></i>
+                                </div>
+                                <input type="password" name="pwd" value="" lay-verify="required" placeholder="密码"
+                                       autocomplete="off" class="layui-input" id="pwd" lay-affix="eye">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-wrap">
+                                <div class="layui-input-prefix">
+                                    <i class="layui-icon layui-icon-password"></i>
+                                </div>
+                                <input type="password" name="rePwd" value=""
+                                       lay-verify="required|confirmPassword" placeholder="确认密码" autocomplete="off"
+                                       class="layui-input" lay-affix="eye">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-wrap">
+                                <div class="layui-input-prefix">
+                                    <i class="layui-icon layui-icon-username"></i>
+                                </div>
+                                <input type="text" name="name" value="" lay-verify="required" placeholder="昵称"
+                                       autocomplete="off" class="layui-input" lay-affix="clear">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-reg">注册</button>
+                        </div>
+                        <div class="layui-form-item demo-reg-other">
+                            <a href="/users/login">登录已有帐号</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            created() {
+                console.log('create!!!')
+            }
+        })
+
+    </script>
+{% endblock %}
