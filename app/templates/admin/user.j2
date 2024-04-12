@@ -1,0 +1,171 @@
+{% extends "base.j2" %}
+{% block title %}用户管理{% endblock %}
+{% block style %}
+    <style>
+        .detail-table {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .detail-table .detail-row {
+            display: flex;
+        }
+
+        .detail-table .detail-row .detail-label {
+            width: 120px;
+        }
+
+        .search-panel {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="app">
+        <div class="layui-col-xs12">
+            <div class="layui-panel search-panel">
+                <div class="layui-form">
+                    <div class="layui-form-item" style="margin: 0">
+                        <div class="layui-input-group">
+                            <div class="layui-input-prefix">
+                                用户
+                            </div>
+                            <input v-model="searchKey" type="text" placeholder="请输入查询内容" class="layui-input">
+                            </input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12">
+            <div class="layui-panel main-panel">
+                <table id="table" lay-filter="table" class="layui-table" lay-data="{url:'', page:true}">
+                    <thead>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="search"><i
+                    class="layui-icon layui-icon-search"></i> 快速查询
+            </button>
+            <button class="layui-btn layui-btn-sm" lay-event="add"><i
+                    class="layui-icon layui-icon-add-1"></i> 增加
+            </button>
+        </div>
+    </script>
+    <script type="text/html" id="barDemo">
+        {% raw %}
+            <div class="layui-clear-space">
+                {{# if(d.rid === 2){ }}
+                <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+                {{# } }}
+            </div>
+        {% endraw %}
+    </script>
+{% endblock %}
+{% block script %}
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                searchKey: ''
+            },
+            created() {
+                console.log('create!!!')
+            }
+        })
+        console.log(vm)
+
+        layui.use(['table', 'layer'], function () {
+            let table = layui.table;
+            let layer = layui.layer;
+            // 创建渲染实例
+            table.render({
+                elem: '#table',
+                url: '/admin/user/list',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                {#height: 'full-80', // 最大高度减去其他容器已占有的高度差#}
+                css: [ // 重设当前表格样式
+                    '.layui-table-tool-temp{padding-right: 145px;}'
+                ].join(''),
+                cellMinWidth: 80,
+                totalRow: true, // 开启合计行
+                page: true,
+                cols: [[
+                    {#{type: 'checkbox', fixed: 'left'},#}
+                    {field: 'id', width: 120, sort: true, title: '用户编号'},
+                    {field: 'login_id', width: 200, sort: true, title: '登录名'},
+                    {field: 'name', width: 200, sort: true, title: '昵称'},
+                    {field: 'add_time', sort: true, title: '添加日期'},
+                    {fixed: 'right', title: '操作', width: 134, minWidth: 125, toolbar: '#barDemo'}
+                ]],
+                before(options) {
+                    options.where.keyword = vm.searchKey
+                }
+            })
+
+            // 工具栏事件
+            table.on('toolbar(table)', function (obj) {
+                var id = obj.config.id;
+                var checkStatus = table.checkStatus(id);
+                var othis = lay(this);
+                switch (obj.event) {
+                    case 'search':
+                        table.reload('table')
+                        break;
+                    case 'add':
+                        utils.openDialog('添加用户', '/admin/user/add', (index, layero, iframeWin) => {
+                            iframeWin.startSubmit(async (data) => {
+                                console.log(data)
+                                let res = await httpKit.doPost('/admin/user/do_add', data)
+                                if (res.ok) {
+                                    layer.close(index)
+                                    table.reload('table')
+                                    layer.msg('添加成功')
+                                } else {
+                                    layer.msg('添加失败')
+                                }
+                            })
+                        })
+                        break;
+                }
+            });
+
+            // 触发单元格工具事件
+            table.on('tool(table)', function (obj) { // 双击 toolDouble
+                var data = obj.data; // 获得当前行数据
+                // console.log(obj)
+                if (obj.event === 'edit') {
+                } else if (obj.event === 'delete') {
+                    layer.confirm('确定要删除这条记录？', {
+                        btn: ['确定', '关闭'] //按钮
+                    }, async function () {
+                        let res = await httpKit.doPost('/admin/user/delete', {id: obj.data.id})
+                        if (res.ok) {
+                            layer.msg('删除成功', {icon: 1});
+                        } else {
+                            layer.msg('删除失败');
+                            console.error(res.msg)
+                        }
+                        table.reload('table')
+                    }, function () {
+                    });
+                }
+            });
+
+        })
+
+    </script>
+{% endblock %}

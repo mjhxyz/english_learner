@@ -3,15 +3,16 @@ from flask_login import UserMixin
 
 import datetime
 
+from . import BaseModel
 from app.ext import db
 
 
-class User(db.Model, UserMixin):
+class User(BaseModel, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     login_id = db.Column(db.String(32), unique=True, nullable=False)
     name = db.Column(db.String(32), unique=True, nullable=False)
     pwd = db.Column(db.String(200), nullable=False)
-    rid = db.Column(db.Integer, nullable=False)
+    rid = db.Column(db.Integer, nullable=False, default=2)
     add_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
     update_time = db.Column(db.DateTime)
 
