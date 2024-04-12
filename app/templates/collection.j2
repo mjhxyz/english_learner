@@ -1,5 +1,5 @@
 {% extends "base.j2" %}
-{% block title %}练习册{% endblock %}
+{% block title %}收藏{% endblock %}
 {% block style %}
     <style>
         .detail-table {
@@ -32,7 +32,7 @@
                     <div class="layui-form-item" style="margin: 0">
                         <div class="layui-input-group">
                             <div class="layui-input-prefix">
-                                练习册
+                                单词
                             </div>
                             <input v-model="searchKey" type="text" placeholder="请输入查询内容" class="layui-input">
                             </input>
@@ -61,9 +61,8 @@
         {% raw %}
             <div class="layui-clear-space">
                 <a class="layui-btn layui-btn-xs" lay-event="detail">详情</a>
-                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="read">开始练习</a>
-                {{# if(!d.collection){ }}
-                <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="collect">收藏</a>
+                {{# if(d.type === 1){ }}
+                <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="read">开始练习</a>
                 {{# } }}
             </div>
         {% endraw %}
@@ -87,7 +86,7 @@
             // 创建渲染实例
             table.render({
                 elem: '#table',
-                url: '/api/books/',
+                url: '/api/collection/',
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
@@ -103,11 +102,20 @@
                 page: true,
                 cols: [[
                     {#{type: 'checkbox', fixed: 'left'},#}
-                    {field: 'id', width: 120, sort: true, title: '练习册编号'},
-                    {field: 'name', sort: true, title: '练习册名'},
-                    {field: 'hot', sort: true, width: 100, title: '热度'},
+                    {field: 'id', width: 120, sort: true, title: '收藏编号'},
+                    {
+                        field: 'type', width: 200, sort: true, title: '类型', templet: function (d) {
+                            if (d.type === 1) {
+                                return '练习册'
+                            } else if (d.type === 2) {
+                                return '单词'
+                            }
+                        }
+                    },
+                    {field: 'name', width: 200, sort: true, title: '名称'},
+                    {field: 'cn', sort: true, title: '中文'},
                     {field: 'add_time', sort: true, title: '添加日期'},
-                    {fixed: 'right', title: '操作', width: 180, minWidth: 180, toolbar: '#barDemo'}
+                    {fixed: 'right', title: '操作', width: 134, minWidth: 125, toolbar: '#barDemo'}
                 ]],
                 before(options) {
                     options.where.keyword = vm.searchKey
@@ -121,6 +129,7 @@
                 var othis = lay(this);
                 switch (obj.event) {
                     case 'search':
+                        console.log(vm.searchKey)
                         table.reload('table')
                         break;
                 }
@@ -132,22 +141,22 @@
                 // console.log(obj)
                 if (obj.event === 'detail') {
                     layer.open({
-                        title: '练习册详情 - ' + data.id,
+                        title: '单词详情 - ' + data.id,
                         type: 1,
                         area: ['500px', '300px'],
                         content: `
                         <div style="padding: 16px;" class="detail-table">
                             <div class="detail-row">
-                                <div class="detail-label">练习册编号</div>
+                                <div class="detail-label">单词编号</div>
                                 <div class="detail-value">${data.id}</div>
                             </div>
                             <div class="detail-row">
-                                <div class="detail-label">练习册名</div>
-                                <div class="detail-value">${data.name}</div>
+                                <div class="detail-label">单词</div>
+                                <div class="detail-value">${data.word}</div>
                             </div>
                             <div class="detail-row">
-                                <div class="detail-label">热度</div>
-                                <div class="detail-value">${data.hot}</div>
+                                <div class="detail-label">中文</div>
+                                <div class="detail-value">${data.cn}</div>
                             </div>
                             <div class="detail-row">
                                 <div class="detail-label">添加时间</div>
@@ -162,25 +171,12 @@
                         title: '阅读 - ' + data.name,
                         type: 2,
                         area: ['500px', '300px'],
-                        content: '/books/read?book_id=' + data.id
-                    });
-                } else if (obj.event === 'collect') {
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/books/collect",
-                        data: JSON.stringify({book_id: obj.data.id}),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            table.reload('table')
-                            console.log(data)
-                        },
-                        error: function (errMsg) {
-                            console.log(data)
-                        }
+                        content: '/books/read?book_id=' + data.obj_id
                     });
                 }
             });
+
         })
+
     </script>
 {% endblock %}
