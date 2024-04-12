@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        html {
+            overflow-y: hidden;
+        }
+
+        [v-clock] {
+            display: none;
+        }
+
+        #addForm {
+        }
+
+        .layui-form-label {
+            width: 140px !important;
+        }
+
+        .layui-input-block {
+            margin-left: 160px !important;
+        }
+
+    </style>
+    {% block style %}
+    {% endblock %}
+
+    <title>
+        {% block title %}
+            添加
+        {% endblock %}
+    </title>
+    <link href="/static/css/layui.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div id="addForm" v-cloak>
+    {% block container %}
+    {% endblock %}
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/layui.min.js"></script>
+<script src="/static/js/vue.min.js"></script>
+<script src="/static/js/httpUtils.js"></script>
+{% block script %}
+    <script>
+        var vueOpts = {
+            el: '#addForm',
+            data: {
+                addForm: {}
+            },
+            methods: {}
+        }
+    </script>
+{% endblock %}
+<script>
+    layui.use(function () {
+        var layer = layui.layer;
+        {% with messages = get_flashed_messages(with_categories=False, category_filter=['error']) %}
+            {% if messages %}
+                layer.msg('{{ messages[0] }}');
+            {% endif %}
+        {% endwith %}
+    });
+</script>
+</body>
+
+</html>

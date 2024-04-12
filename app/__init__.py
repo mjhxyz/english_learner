@@ -7,9 +7,11 @@ from .view.index import index_bp
 from .view.words import words_bp
 from .view.books import books_bp
 from .view.user import users_bp
+from .view.admin.words import admin_words_bp
 from .view.collection import collection_bp
 from .api.words import words_api
 from .api.books import books_api
+from .api.admin.words import admin_words_api
 from .api.collection import collection_api
 from .ext import config_extensions
 from .models import BaseModel
@@ -24,10 +26,12 @@ def config_blueprint(app):
         (books_bp, '/books'),
         (users_bp, '/users'),
         (collection_bp, '/collection'),
+        (admin_words_bp, '/admin/words'),
 
         (words_api, '/api/words'),
         (books_api, '/api/books'),
         (collection_api, '/api/collection'),
+        (admin_words_api, '/api/admin/words'),
     ]
     for bp, prefix in BLUEPRINTS:
         app.register_blueprint(bp, url_prefix=prefix)

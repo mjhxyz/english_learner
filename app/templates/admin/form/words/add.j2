@@ -1,0 +1,45 @@
+{% extends "admin/form/add_base.j2" %}
+{% block title %}添加单词{% endblock %}
+{% block container %}
+    <form id="form" class="layui-form" action="/" lay-filter="form">
+        <div class="layui-form-item">
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单词</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input v-model="form.word" placeholder="请输入单词" type="text" name="word" lay-verify="required"
+                       autocomplete="off"
+                       lay-affix="clear"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">中文</label>
+                <div class="layui-input-inline">
+                    <input v-model="form.cn" type="text" name="cn" lay-verify="required" placeholder="请输入中文"
+                           autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="demo1">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block script %}
+    <script>
+        function startSubmit(callback) {
+            layui.use(['form'], function () {
+                let form = layui.form
+                form.submit('form', (data) => {
+                    callback(data.field)
+                })
+            })
+        }
+    </script>
+{% endblock %}
