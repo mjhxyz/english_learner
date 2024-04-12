@@ -68,13 +68,9 @@
         var vm = new Vue({
             el: '#app',
             data: {
-                searchKey: ''
-            },
-            created() {
-                console.log('create!!!')
+                searchKey: '{{ kw }}'
             }
         })
-        console.log(vm)
 
         layui.use(['table'], function () {
             let table = layui.table;

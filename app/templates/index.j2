@@ -50,14 +50,14 @@
             {% endblock %}
         </div>
     </div>
-    <div class="layui-col-xs12">
+    <div class="layui-col-xs12" id="box">
         <div class="layui-panel search-panel">
-            <div>随便搜点什么吧~</div>
+            <div>随便搜点什么单词吧~</div>
             <div class="layui-form-item">
                 <div class="layui-input-group">
-                    <input type="text" placeholder="请输入感兴趣的内容" class="layui-input">
+                    <input v-model="kv" type="text" placeholder="请输入感兴趣的内容" class="layui-input">
                     <div class="layui-input-suffix">
-                        <button class="layui-btn">搜索</button>
+                        <a class="layui-btn" :href="'/words?kw=' + kv">搜索</a>
                     </div>
                 </div>
             </div>
@@ -66,5 +66,11 @@
 {% endblock %}
 {% block script %}
     <script>
+        var vm = new Vue({
+            el: '#box',
+            data: {
+                kv: ''
+            }
+        })
     </script>
 {% endblock %}
