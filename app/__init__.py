@@ -9,6 +9,7 @@ from .view.books import books_bp
 from .view.user import users_bp
 from .view.admin.user import admin_user_bp
 from .view.admin.words import admin_words_bp
+from .view.admin.books import admin_books_bp
 from .view.collection import collection_bp
 from .api.words import words_api
 from .api.books import books_api
@@ -29,6 +30,7 @@ def config_blueprint(app):
         (admin_user_bp, '/admin/user'),
         (collection_bp, '/collection'),
         (admin_words_bp, '/admin/words'),
+        (admin_books_bp, '/admin/books'),
 
         (words_api, '/api/words'),
         (books_api, '/api/books'),

@@ -1,0 +1,78 @@
+{% extends "admin/form/add_base.j2" %}
+{% block title %}添加练习册{% endblock %}
+{% block container %}
+    <form id="form" class="layui-form" action="/" lay-filter="form">
+        <div class="layui-form-item">
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">练习册名称</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input placeholder="请输入练习册名" type="text" name="name" lay-verify="required"
+                       autocomplete="off"
+                       lay-affix="clear"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">单词列表</label>
+                <div class="layui-input-inline" style="width: 700px">
+                    <table id="wordtable" lay-filter="wordtable" class="layui-table" lay-data="{url:'', page:true}"
+                           lay-verify="word">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block script %}
+    <script>
+        function startSubmit(callback) {
+            layui.use(['form', 'table'], function () {
+                let form = layui.form
+                let table = layui.table
+                form.submit('form', (data) => {
+                    var checkStatus = table.checkStatus('wordtable');
+                    var checked = checkStatus.data;
+                    let params = data.field
+                    params['word_ids'] = checked.map(e => e.id)
+                    callback(data.field)
+                })
+            })
+        }
+
+        layui.use(['table', 'form'], function () {
+            // 自定义验证规则
+            let form = layui.form
+            let table = layui.table
+            form.verify({
+                word: function (value) {
+                    var checkStatus = table.checkStatus('wordtable');
+                    var checked = checkStatus.data;
+                    if (!checked || checked.length === 0) {
+                        return '请至少选择一个单词'
+                    }
+                }
+            });
+
+
+            // 创建渲染实例
+            table.render({
+                elem: '#wordtable',
+                url: '/api/words/',
+                {#height: 'full-80', // 最大高度减去其他容器已占有的高度差#}
+                css: [ // 重设当前表格样式
+                    '.layui-table-tool-temp{padding-right: 145px;}'
+                ].join(''),
+                cellMinWidth: 80,
+                totalRow: true, // 开启合计行
+                page: true,
+                cols: [[
+                    {type: 'checkbox', fixed: 'left'},
+                    {field: 'word', width: 200, sort: true, title: '单词'},
+                    {field: 'cn', sort: true, title: '中文'},
+                ]],
+            })
+        })
+    </script>
+{% endblock %}
